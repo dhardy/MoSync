@@ -74,7 +74,7 @@ namespace Base {
 #ifdef RESOURCE_MEMORY_LIMIT
 		//each platform must define some of these functions.
 		//the sizes they return need not be exact.
-#define DECLARE_SIZEFUNCS(R, T, D) uint size_##R(T*);
+#define DECLARE_SIZEFUNCS(R, T, D) size_t size_##R(T*);
 		TYPES(DECLARE_SIZEFUNCS);
 #endif
 

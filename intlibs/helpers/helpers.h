@@ -257,6 +257,7 @@ namespace MoSyncError {
 #define DUMPINT(i) LOG("%s: %i\n", #i, i)
 #define DUMPINT64(i) LOG("%s: %" INT64PREFIX "i\n", #i, i)
 #define DUMPHEX(i) LOG("%s: 0x%x\n", #i, i)
+#define DUMPPTR(i) LOG("%s: %p\n", #i, i)
 
 #ifndef MAX
 #define MAX(a,b) ((a) > (b) ? (a) : (b))

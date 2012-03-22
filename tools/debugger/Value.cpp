@@ -195,8 +195,13 @@ const TypeBase* Value::getTypeBase() const {
 
 
 const void* Value::getDataAddress() const {
-	if(getType() == TypeBase::eFunction) return (const void*)mV;
-	else if(mSym.address != NULL) return mSym.address;
+	if(getType() == TypeBase::eFunction)
+		// WARNING: We're assuming here that address is
+		// small enough to fit in an int; I've no idea
+		// where it comes from!
+		return (const void*)(size_t)mV;
+	else if(mSym.address != NULL)
+		return mSym.address;
 	else return &mV;
 }
 

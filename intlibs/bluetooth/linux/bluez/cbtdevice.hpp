@@ -53,7 +53,7 @@ public:
     {
         memcpy( &mAddr, a, sizeof( MABtAddr ) );
         strncpy( mName, n, MAX_DEVICE_NAME+1 );
-        mName[MAX_DEVICE_NAME] = NULL;
+        mName[MAX_DEVICE_NAME] = 0;
     }
 
     /**

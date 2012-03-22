@@ -609,7 +609,9 @@ SYSCALL(void, maConnReadToData(MAHandle conn, MAHandle data, int offset, int siz
 		int sLength;
 		MYASSERT(stream.length(sLength), ERR_DATA_OOB);
 		MYASSERT(sLength >= offset + size, ERR_DATA_OOB);
-		ROOM(SYSCALL_THIS->resources.add_RT_FLUX(data, (void*)sLength));
+		// hacky conversion, but should do in this case:
+		size_t st_sLen = sLength;
+		ROOM(SYSCALL_THIS->resources.add_RT_FLUX(data, (void*)st_sLen));
 	}
 
 	mac.state |= CONNOP_READ;
@@ -630,7 +632,9 @@ SYSCALL(void, maConnWriteFromData(MAHandle conn, MAHandle data, int offset, int 
 		int sLength;
 		MYASSERT(stream.length(sLength), ERR_DATA_OOB);
 		MYASSERT(sLength >= offset + size, ERR_DATA_OOB);
-		ROOM(SYSCALL_THIS->resources.add_RT_FLUX(data, (void*)sLength));
+		// hacky conversion, but should do in this case:
+		size_t st_sLen = sLength;
+		ROOM(SYSCALL_THIS->resources.add_RT_FLUX(data, (void*)st_sLen));
 	}
 
 	mac.state |= CONNOP_WRITE;

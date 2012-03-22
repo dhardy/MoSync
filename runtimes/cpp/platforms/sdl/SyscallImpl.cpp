@@ -1058,15 +1058,16 @@ namespace Base {
 		return ret;
 	}
 
-	static Uint32 SDLCALL MATimerCallback(Uint32 interval, void* sequence) {
-		LOGD("MATimerCallback %i...", (int)sequence);
+	static Uint32 SDLCALL MATimerCallback(Uint32 interval, void* sequence_p) {
+		int sequence = *((int*)sequence_p);
+		LOGD("MATimerCallback %i...", sequence);
 		DEBUG_ASRTZERO(SDL_LockMutex(gTimerMutex));
 		{
-			SDL_UserEvent event = { FE_TIMER, (int)(size_t)sequence, NULL, NULL };
+			SDL_UserEvent event = { FE_TIMER, sequence, NULL, NULL };
 			FE_PushEvent((SDL_Event*)&event);
 		}
 		DEBUG_ASRTZERO(SDL_UnlockMutex(gTimerMutex));
-		LOGD("MATimerCallback %i done\n", (int)sequence);
+		LOGD("MATimerCallback %i done\n", sequence);
 		return (Uint32)-1;
 	}
 
@@ -1629,7 +1630,7 @@ namespace Base {
 		DEBUG_ASSERT(gTimerId == NULL);
 		if(timeout > 0) {
 			//LOGD("Setting timer sequence %i\n", gTimerSequence);
-			gTimerId = SDL_AddTimer(timeout, MATimerCallback, (void*)gTimerSequence);
+			gTimerId = SDL_AddTimer(timeout, MATimerCallback, (void*)&gTimerSequence);
 			DEBUG_ASSERT(gTimerId != NULL);
 		}
 		while(true) {
@@ -1682,9 +1683,11 @@ namespace Base {
 	}
 
 #ifdef RESOURCE_MEMORY_LIMIT
-	uint Base::size_RT_IMAGE(SDL_Surface* r) {
+namespace Base {
+	size_t size_RT_IMAGE(SDL_Surface* r) {
 		return sizeof(SDL_Surface) + r->pitch * r->h;
 	}
+}
 	SYSCALL(int, maFreeObjectMemory()) {
 		return maTotalObjectMemory() - gSyscall->resources.getResmem();
 	}

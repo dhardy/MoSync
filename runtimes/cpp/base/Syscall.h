@@ -253,7 +253,7 @@ namespace Base {
 	CUSTOM_EVENT_WIDGET(m)\
 
 namespace Base {
-	uint getMaxCustomEventSize();
+	size_t getMaxCustomEventSize();
 }
 
 #endif // _SYSCALL_H_

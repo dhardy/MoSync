@@ -28,6 +28,8 @@ def get_gcc_version_string(gcc)
 		#puts "yo: #{parts.inspect}"
 		if(parts[0] == "gcc" && parts[1] == "version")
 			return parts[2].strip
+		elsif(parts[0] == 'gcc-Version')
+			return parts[1].strip
 		elsif(parts[0] == 'clang' && parts[1] == 'version')
 			return "clang#{parts[2].strip}"
 		end

@@ -32,7 +32,7 @@ struct Symbol {
 	bool global;
 	int fileScope;
 	int lineNumber;	//on which this symbol is defined
-	int address;
+	size_t address;
 };
 
 #endif	//STABS_SYMBOL_H

@@ -124,7 +124,8 @@ extern "C" int mosyncLibMain(int argc, char** argv, mainfunc MAMain) {
 }
 
 void* Base::Syscall::GetValidatedMemRange(int address, int size) {
-	return (void*)address;
+	// NOTE: this is a weird function. I hope nothing goes wrong...
+	return (void*)(size_t)address;
 }
 void Base::Syscall::ValidateMemRange(const void* ptr, int size) {
 }
@@ -139,10 +140,12 @@ int Base::Syscall::GetValidatedStackValue(int offset, va_list argptr) {
 	return va_arg(argptr, int);
 }
 const char* Base::Syscall::GetValidatedStr(int address) {
-	return (const char*)address;
+	// NOTE: this is a weird function. I hope nothing goes wrong...
+	return (const char*)(size_t)address;
 }
 const wchar* Base::Syscall::GetValidatedWStr(int address) {
-	return (const wchar*)address;
+	// NOTE: this is a weird function. I hope nothing goes wrong...
+	return (const wchar*)(size_t)address;
 }
 
 void Base::Syscall::VM_Yield() {

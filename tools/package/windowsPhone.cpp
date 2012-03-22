@@ -24,7 +24,8 @@
 #include "util.h"
 #include "tools.h"
 #include "helpers/mkdir.h"
-#include "filelist/copyFiles.h"
+//FIXME: I can't find this file!
+//#include "filelist/copyFiles.h"
 
 #if defined (WIN32) || defined(_WIN32)
 #define PLATFORM_WIN32
@@ -60,7 +61,8 @@ void packageWindowsPhone(const SETTINGS& s, const RuntimeInfo& ri) {
 	}
 
 	_mkdir(csprojOutput.c_str());
-	copyFilesRecursively(templateLocation.c_str(), csprojOutput.c_str());
+	//FIXME: commented out because I can't find copyFiles.h!
+	//copyFilesRecursively(templateLocation.c_str(), csprojOutput.c_str());
 
 	generateCmd << getBinary("winphone-builder") <<
 		" -version " << s.version <<

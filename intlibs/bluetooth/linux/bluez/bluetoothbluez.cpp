@@ -467,13 +467,13 @@ void BluetoothBluez::discoverDevices ( MABtCallback cb,
 			if ( mWorkState == DEVICE_DISC_CANCELED )
 				break;
 
-            devName[0] = NULL;
+            devName[0] = 0;
 
 			// Perform a name query
 			if ( n == true )
 			{            
 		        if ( hci_read_remote_name( devSock, &pQueryInfo[i].bdaddr,
-		                                   sizeof( devName ), devName, NULL ) < 0 )
+		                                   sizeof( devName ), devName, 0 ) < 0 )
 		        {
 		            LOGBT( "Device name inquiry failed" );
 		        }

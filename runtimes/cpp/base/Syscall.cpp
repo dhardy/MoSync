@@ -70,29 +70,30 @@ using namespace Base;
 
 namespace Base {
 
-	uint getMaxCustomEventSize() {
+	size_t getMaxCustomEventSize() {
 		#define COUNT_CUSTOM_EVENT(eventType, dataType)\
 			if(maxCustomEventSize < sizeof(dataType)) maxCustomEventSize = sizeof(dataType);
 
-		uint maxCustomEventSize = 0;
+		size_t maxCustomEventSize = 0;
 		CUSTOM_EVENTS(COUNT_CUSTOM_EVENT);
-		DUMPHEX(maxCustomEventSize);
+		// void* has same size as size_t so we can safely cast:
+		DUMPPTR((void*)maxCustomEventSize);
 		maxCustomEventSize = (maxCustomEventSize+0x3) & (~0x3); // align to sizeof(int)
 
 		return maxCustomEventSize;
 	}
 
 #ifdef RESOURCE_MEMORY_LIMIT
-	uint size_RT_FLUX(void* size) {
-		return (uint)(size_t)size;
+	size_t size_RT_FLUX(void* size) {
+		return (size_t)size;
 	}
-	uint size_RT_PLACEHOLDER(void*) {
+	size_t size_RT_PLACEHOLDER(void*) {
 		return 0;
 	}
-	uint size_RT_LABEL(Label* r) {
+	size_t size_RT_LABEL(Label* r) {
 		return sizeof(Label) + strlen(r->getName());
 	}
-	uint size_RT_BINARY(Stream* r) {
+	size_t size_RT_BINARY(Stream* r) {
 		if(r->ptrc() == NULL)
 			return 0;
 		int length;
